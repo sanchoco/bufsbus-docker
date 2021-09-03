@@ -1,0 +1,24 @@
+{
+  "name": "bufsbus-node",
+  "version": "1.0.0",
+  "description": "BUFS Bus time check",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanchoco/bufsbus-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanchoco/bufsbus-node/issues"
+  },
+  "homepage": "https://github.com/sanchoco/bufsbus-node#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "pm2": "^5.1.1"
+  }
+}

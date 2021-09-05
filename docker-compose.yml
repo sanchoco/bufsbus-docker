@@ -1,0 +1,29 @@
+version:  '3.3'
+
+services:
+  mysql:
+    # image: bufsbus-mysql
+    build: 
+      context: ./bufsbus-mysql
+      dockerfile: Dockerfile
+    restart: always
+    container_name: bufsbus-mysql
+    environment:
+      - MYSQL_DATABASE=bufsbus
+      - MYSQL_ALLOW_EMPTY_PASSWORD="true"
+      - TZ='Asia/Seoul'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  node:
+    # image: bufsbus-server
+    build: 
+      context: ./bufsbus-server
+      dockerfile: Dockerfile
+    restart: always
+    container_name: bufsbus-server
+    ports:
+      - '80:3000'
+    expose:
+      - '80'

@@ -4,7 +4,8 @@
   "description": "BUFS Bus time check",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "pm2 start",
+    "prod": "pm2 start && pm2 log"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,13 @@
   },
   "homepage": "https://github.com/sanchoco/bufsbus-node#readme",
   "dependencies": {
+    "axios": "^0.21.3",
     "cors": "^2.8.5",
+    "dayjs": "^1.10.6",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "pm2": "^5.1.1"
+    "path": "^0.12.7",
+    "pm2": "^5.1.1",
+    "retry-axios": "^2.6.0"
   }
 }

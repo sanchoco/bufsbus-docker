@@ -3,12 +3,17 @@ const cors = require('cors');
 const path = require('path');
 const api = require('./api');
 const { errorHandler } = require('../util');
+const connectDB = require('../db');
 
-const app = express();
-const port = process.env.PORT || 3000;
-const web = path.normalize(__dirname + '/../website');
 
-const server = () => {
+const server = async () => {
+    //connect TypeORM
+    await connectDB();
+
+    const app = express();
+    const port = process.env.PORT || 3000;
+    const web = path.normalize(__dirname + '/../website');
+
     app.use(express.json());
     app.use(cors());
     app.use(express.static(web));

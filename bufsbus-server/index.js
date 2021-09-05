@@ -1,3 +1,3 @@
 const server = require('./src/server');
 
-server();
+server().catch(console.error);

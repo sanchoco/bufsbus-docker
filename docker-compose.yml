@@ -2,28 +2,36 @@ version:  '3.3'
 
 services:
   mysql:
-    # image: bufsbus-mysql
     build: 
       context: ./bufsbus-mysql
       dockerfile: Dockerfile
     restart: always
     container_name: bufsbus-mysql
     environment:
-      - MYSQL_DATABASE=bufsbus
-      - MYSQL_ALLOW_EMPTY_PASSWORD="true"
-      - TZ='Asia/Seoul'
+      MYSQL_ROOT_PASSWORD: tempPass
+      MYSQL_DATABASE: bufsbus
+      TZ: 'Asia/Seoul'
+      MYSQL_USER: bus_user
+      MYSQL_PASSWORD: busTempPass
     ports:
       - '3306:3306'
     expose:
       - '3306'
   node:
-    # image: bufsbus-server
-    build: 
+    depends_on: 
+      - mysql
+    build:
       context: ./bufsbus-server
       dockerfile: Dockerfile
     restart: always
     container_name: bufsbus-server
     ports:
       - '80:3000'
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: bus_user
+      MYSQL_PASSWORD: busTempPass
+      MYSQL_DATABASE: bufsbus
     expose:
       - '80'

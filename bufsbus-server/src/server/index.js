@@ -8,15 +8,17 @@ const { errorHandler, updateCityBusDB, updateHolidayDB } = require('../util');
 const server = async () => {
 
     // init db data
-    console.log(await updateCityBusDB());
-    console.log(await updateHolidayDB());
+    await updateCityBusDB();
+    await updateHolidayDB();
 
     // set schedule job
     schedule.scheduleJob('30 * * * * *', async () => {
-        console.log(await updateCityBusDB());
+        await updateCityBusDB();
+        console.log('City bus DB updated.');
     });
     schedule.scheduleJob({tz: 'Asia/Seoul', date: 0, hour: 0, minute: 0, second: 0}, async () => {
-        console.log(await updateHolidayDB());
+        await updateHolidayDB();
+        console.log('Holiday DB updated.');
     });
 
     // init express

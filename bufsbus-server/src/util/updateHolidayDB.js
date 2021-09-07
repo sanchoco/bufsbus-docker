@@ -24,8 +24,6 @@ const updateHolidayDB = async () => {
         })
         const url = base.toString();
 
-        console.log('Axios request:', url);
-
         rax.attach();
         const res = await axios.get(url, { timeout: 1000, raxConfig: { retry: 100, retryDelay: 100 }});
         if (res?.data?.response?.body?.items?.item){

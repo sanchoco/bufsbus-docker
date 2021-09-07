@@ -1,4 +1,4 @@
 USE bufsbus;
 
 DROP TABLE IF EXISTS holiday;
-CREATE TABLE holiday (dateName char(50), locdate date PRIMARY KEY);
+CREATE TABLE holiday (dateName varchar(100), locdate char(10) PRIMARY KEY);

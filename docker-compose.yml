@@ -13,6 +13,9 @@ services:
       TZ: 'Asia/Seoul'
       MYSQL_USER: bus_user
       MYSQL_PASSWORD: busTempPass
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     ports:
       - '3306:3306'
     expose:
@@ -28,10 +31,9 @@ services:
     ports:
       - '80:3000'
     environment:
+      NODE_ENV: production
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
       MYSQL_USER: bus_user
       MYSQL_PASSWORD: busTempPass
       MYSQL_DATABASE: bufsbus
-    expose:
-      - '80'

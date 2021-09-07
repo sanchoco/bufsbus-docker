@@ -2,7 +2,8 @@ const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 const { Router } = require('express');
-const { wrapAsync } = require('../../util');
+const { wrapAsync } = require('../util');
+const pool = require('../db');
 const router = Router();
 const NOBUS = '버스가 없습니다.';
 
@@ -10,7 +11,6 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('Asia/Seoul');
 
-const pool = require('../../db');
 
 router.get('/', wrapAsync(async (req, res) => {
     const now = dayjs().tz('Asia/Seoul').format('HH:mm:ss');

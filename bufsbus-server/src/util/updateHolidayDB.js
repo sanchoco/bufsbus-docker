@@ -36,15 +36,15 @@ const updateHolidayDB = async () => {
             await connection.query(`INSERT INTO holiday VALUES ${item.toString()}`);
         }
         [rows] = await connection.query('SELECT * FROM holiday');
-        connection.end();
-        return { result: rows };
+        connection.release();
+        return { updateHolidayDB: rows };
 
     } catch (error) {
         console.error(error.stack);
         if (error.code == 'ECONNABORTED')
             return await updateHolidayDB();
         else {
-            return { result: error.stack };
+            return { updateHolidayDB: error.stack };
         }
     }
 }

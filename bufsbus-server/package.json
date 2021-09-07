@@ -4,7 +4,7 @@
   "description": "BUFS Bus time check",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start && pm2 log"
+    "start": "pm2 start"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
+    "node-schedule": "^2.0.0",
     "path": "^0.12.7",
     "pm2": "^5.1.1",
     "retry-axios": "^2.6.0",

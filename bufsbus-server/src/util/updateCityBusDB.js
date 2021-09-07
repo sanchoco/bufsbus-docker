@@ -2,7 +2,6 @@ const axios = require('axios').default;
 const pool = require('../db');
 require('dotenv').config();
 
-
 const updateCityBusDB = async () => {
 
     const base = new URL('http://61.43.246.153');
@@ -20,7 +19,6 @@ const updateCityBusDB = async () => {
         await connection.query('DELETE FROM city_301');
         if (res?.data?.response?.body?.items?.item){
             for (item of res?.data?.response?.body?.items?.item) {
-                console.log(item)
                 const bstop = item?.bstopIdx == 10 ? 'guseo' : 'nopo';
                 const min1 = item.min1 || 'NULL';
                 const min2 = item.min2 || 'NULL';
@@ -30,11 +28,11 @@ const updateCityBusDB = async () => {
             }
             const [ rows ] = await connection.query('SELECT * FROM city_301');
             connection.release();
-            return { result: rows };
+            return { updateCityBus: rows };
         }
     } catch (error) {
-        console.log(error);
-        return { result: error };
+        console.log(error.stack);
+        return { updateCityBus: error };
     }
 }
 

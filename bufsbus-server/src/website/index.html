@@ -38,7 +38,7 @@
 			function getData() {
 				axios({
 					method: 'get', //통신 방식
-					url: 'http://localhost:3000/api', //통신할 페이지
+					url: 'http://localhost/api', //통신할 페이지
 				}).then(response => {
 					for (key in response.data)
 						document.getElementById(key).innerText = response.data[key];

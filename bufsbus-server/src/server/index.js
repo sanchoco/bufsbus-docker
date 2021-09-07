@@ -12,13 +12,13 @@ const server = async () => {
     await updateHolidayDB();
 
     // set schedule job
-    schedule.scheduleJob('30 * * * * *', async () => {
+    schedule.scheduleJob('0,20,40 * * * * *', async () => {
         await updateCityBusDB();
-        console.log('City bus DB updated.');
+        console.log('City bus DB updated.' + new Date().toISOString());
     });
     schedule.scheduleJob({tz: 'Asia/Seoul', date: 0, hour: 0, minute: 0, second: 0}, async () => {
         await updateHolidayDB();
-        console.log('Holiday DB updated.');
+        console.log('Holiday DB updated. ' + new Date().toISOString());
     });
 
     // init express
@@ -41,7 +41,7 @@ const server = async () => {
     // error handling
     app.use(errorHandler);
 
-    app.listen(port, host, ()=> { console.log(`BUFS-BUS Server starting in http://${host}:${port}/`)})
+    app.listen(port, host, () => { console.log(`BUFS-BUS Server starting in http://${host}:${port}/`)})
 }
 
 module.exports = server;

@@ -1,9 +1,9 @@
 USE bufsbus;
 
-DROP TABLE IF EXISTS shuttle_unversity;
-CREATE TABLE shuttle_unversity (arrive time PRIMARY KEY);
+DROP TABLE IF EXISTS shuttle_university;
+CREATE TABLE shuttle_university (arrive time PRIMARY KEY);
 
-INSERT INTO shuttle_unversity
+INSERT INTO shuttle_university
 VALUES
 	('08:10:00'),
 	('08:20:00'),
@@ -88,21 +88,21 @@ VALUES
 DROP VIEW IF EXISTS shuttle_domitory;
 CREATE VIEW shuttle_domitory AS
 SELECT DATE_ADD(arrive, INTERVAL 4 MINUTE) AS "arrive"
-FROM shuttle_unversity;
+FROM shuttle_university;
 
 DROP VIEW IF EXISTS shuttle_beomeosa;
 CREATE VIEW shuttle_beomeosa AS
 SELECT DATE_ADD(arrive, INTERVAL 9 MINUTE) AS "arrive"
-FROM shuttle_unversity;
+FROM shuttle_university;
 
 DROP VIEW IF EXISTS shuttle_namsan;
 CREATE VIEW shuttle_namsan AS
 SELECT DATE_ADD(arrive, INTERVAL 11 MINUTE) AS "arrive"
-FROM shuttle_unversity;
+FROM shuttle_university;
 
 DROP VIEW IF EXISTS shuttle_fire;
 CREATE VIEW shuttle_fire AS
 SELECT DATE_ADD(arrive, INTERVAL 15 MINUTE) AS "arrive"
-FROM shuttle_unversity;
+FROM shuttle_university;
 
 

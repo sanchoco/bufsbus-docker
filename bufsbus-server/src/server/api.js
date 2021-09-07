@@ -42,10 +42,10 @@ router.get('/', wrapAsync(async (req, res) => {
     const isHoliday = (week === 'Sun' || week === 'Sat' || legalHoliday.length) ? true : false
 
     // 셔틀 버스
-    const [ shuttle_unversity, shuttle_domitory, shuttle_beomeosa, shuttle_namsan, shuttle_fire ] =
+    const [ shuttle_university, shuttle_domitory, shuttle_beomeosa, shuttle_namsan, shuttle_fire ] =
         isHoliday ? [NOBUS, NOBUS, NOBUS, NOBUS, NOBUS]
         : await Promise.all([
-            getData('shuttle_unversity', 'arrive'),
+            getData('shuttle_university', 'arrive'),
             getData('shuttle_domitory', 'arrive'),
             getData('shuttle_beomeosa', 'arrive'),
             getData('shuttle_namsan', 'arrive'),
@@ -68,7 +68,7 @@ router.get('/', wrapAsync(async (req, res) => {
     const city_nopo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='nopo'`))[0]);
 
     res.json({
-        shuttle_unversity,
+        shuttle_university,
         shuttle_domitory,
         shuttle_beomeosa,
         shuttle_namsan,

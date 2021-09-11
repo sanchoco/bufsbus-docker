@@ -13,12 +13,13 @@ dayjs.tz.setDefault('Asia/Seoul');
 
 
 router.get('/', wrapAsync(async (req, res) => {
+    const conn = await pool.getConnection();
     const now = dayjs().tz('Asia/Seoul').format('HH:mm:ss');
     const today = dayjs().tz('Asia/Seoul').format('YYYYMMDD');
     const week = dayjs().tz('Asia/Seoul').format('ddd');
     
     const getData = async (table, order) => {
-        const [ rows ] = await pool.query(
+        const [ rows ] = await conn.query(
             `SELECT * 
              FROM ${table} 
              WHERE arrive >= '${now}' 
@@ -38,7 +39,7 @@ router.get('/', wrapAsync(async (req, res) => {
     }
 
     // 휴일 여부
-    const [ legalHoliday ] = await pool.query(`SELECT * FROM holiday WHERE locdate = ${today}`);
+    const [ legalHoliday ] = await conn.query(`SELECT * FROM holiday WHERE locdate = ${today}`);
     const isHoliday = (week === 'Sun' || week === 'Sat' || legalHoliday.length) ? true : false
 
     // 셔틀 버스
@@ -64,9 +65,9 @@ router.get('/', wrapAsync(async (req, res) => {
 
     // 301번 버스
     const timeFormat = (rows) => rows.length && rows[0].min1 ? rows[0].min1 + '분 후 도착' : NOBUS;
-    const city_guseo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='guseo'`))[0]);
-    const city_nopo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='nopo'`))[0]);
-
+    const city_guseo = timeFormat((await conn.query(`SELECT * FROM city_301 WHERE bus_stop='guseo'`))[0]);
+    const city_nopo = timeFormat((await conn.query(`SELECT * FROM city_301 WHERE bus_stop='nopo'`))[0]);
+    conn.release();
     res.json({
         shuttle_university,
         shuttle_domitory,

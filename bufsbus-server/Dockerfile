@@ -8,4 +8,4 @@ RUN npm install -g pm2
 
 EXPOSE 3000
 
-CMD ["pm2-runtime", "index.js"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js", "--env", "production"]

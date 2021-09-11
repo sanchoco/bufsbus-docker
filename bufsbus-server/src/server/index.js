@@ -6,7 +6,6 @@ const schedule = require('node-schedule');
 const { errorHandler, updateCityBusDB, updateHolidayDB } = require('../util');
 
 const server = async () => {
-
     // init db data
     await updateCityBusDB();
     await updateHolidayDB();
@@ -34,7 +33,7 @@ const server = async () => {
 
     // site
     app.get('/', (req, res) => res.sendFile(web));
-
+    app.get('/health', (req, res) => res.end());
     // api
     app.use('/api', api);
 

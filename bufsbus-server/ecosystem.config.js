@@ -2,6 +2,8 @@ module.exports = {
   apps : [{
     name   : "bufsbus-server",
     script : "index.js",
-    watch: true
+    watch: false,
+    exec_mode: 'cluster',
+    instances: 2
   }]
 }

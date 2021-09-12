@@ -12,7 +12,7 @@ const updateCityBusDB = async () => {
     const url = base.toString();
 
     try {
-        const res = await axios.get(url, { timeout: 20000 });
+        const res = await axios.get(url, { timeout: 30000 });
         await pool.query('DELETE FROM city_301');
         if (res?.data?.response?.body?.items?.item){
             for (item of res?.data?.response?.body?.items?.item) {

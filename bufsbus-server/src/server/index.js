@@ -11,7 +11,7 @@ const server = async () => {
     await updateHolidayDB();
 
     // set schedule job
-    schedule.scheduleJob('0,20,40 * * * * *', async () => {
+    schedule.scheduleJob('0, 30 * * * * *', async () => {
         try {
             await updateCityBusDB();
             console.log('City bus DB updated.' + new Date().toISOString());

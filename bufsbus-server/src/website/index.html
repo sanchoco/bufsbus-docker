@@ -32,11 +32,6 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script>
-			document.addEventListener("DOMContentLoaded", function(){
-				getData();
-				setInterval(getData, 5000);
-			});
-
 			function getData() {
 				axios({
 					method: 'get', //통신 방식
@@ -209,6 +204,13 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function(){
+				getData();
+				setInterval(getData, 5000);
+			});
+		</script>
 
 	</body>
+
 </html>

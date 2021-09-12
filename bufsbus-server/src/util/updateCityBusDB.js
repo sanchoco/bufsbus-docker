@@ -1,8 +1,7 @@
 const axios = require('axios').default;
-const pool = require('../db');
 require('dotenv').config();
 
-const updateCityBusDB = async () => {
+const updateCityBusDB = async (pool) => {
     const base = new URL('http://61.43.246.153');
     base.pathname = '/openapi-data/service/busanBIMS2/stopArr';
     base.search = new URLSearchParams({

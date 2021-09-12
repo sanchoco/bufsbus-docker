@@ -4,16 +4,17 @@ const path = require('path');
 const api = require('./api');
 const schedule = require('node-schedule');
 const { errorHandler, updateCityBusDB, updateHolidayDB } = require('../util');
+const pool = require('../db');
 
 const server = async () => {
     // init db data
-    await updateCityBusDB();
-    await updateHolidayDB();
+    await updateCityBusDB(pool);
+    await updateHolidayDB(pool);
 
     // set schedule job
     schedule.scheduleJob('0,30 * * * * *', async () => {
         try {
-            await updateCityBusDB();
+            await updateCityBusDB(pool);
             console.log('City bus DB updated.' + new Date().toISOString());
         } catch (err) {
             console.log('City bus DB Update error!');
@@ -21,7 +22,7 @@ const server = async () => {
     });
     schedule.scheduleJob({tz: 'Asia/Seoul', date: 0, hour: 0, minute: 0, second: 0}, async () => {
         try {
-            await updateHolidayDB();
+            await updateHolidayDB(pool);
             console.log('Holiday DB updated. ' + new Date().toISOString());
         } catch (err) {
             console.log('Holiday DB Update error!');
@@ -41,7 +42,7 @@ const server = async () => {
 
     // site
     app.get('/', (req, res) => res.sendFile(web));
-    app.get('/health', (req, res) => res.end());
+    app.get('/health', (req, res) => res.send('health check page'));
     // api
     app.use('/api', api);
 

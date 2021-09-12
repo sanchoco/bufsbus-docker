@@ -1,6 +1,5 @@
 const axios = require('axios').default;
 const rax = require('retry-axios');
-const pool = require('../db');
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
@@ -10,7 +9,7 @@ dayjs.tz.setDefault('Asia/Seoul');
 
 require('dotenv').config();
 
-const updateHolidayDB = async () => {
+const updateHolidayDB = async (pool) => {
     try {
         const year = dayjs().tz('Asia/Seoul').format('YYYY');
 

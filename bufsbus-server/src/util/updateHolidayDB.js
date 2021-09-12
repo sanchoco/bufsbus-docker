@@ -12,7 +12,6 @@ require('dotenv').config();
 
 const updateHolidayDB = async () => {
     try {
-        const connection = await pool.getConnection(async conn => conn);
         const year = dayjs().tz('Asia/Seoul').format('YYYY');
 
         const base = new URL('http://apis.data.go.kr');
@@ -27,22 +26,21 @@ const updateHolidayDB = async () => {
         rax.attach();
         const res = await axios.get(url, { timeout: 1000, raxConfig: { retry: 100, retryDelay: 100 }});
         if (res?.data?.response?.body?.items?.item){
-            await connection.query('DELETE FROM holiday');
+            await pool.query('DELETE FROM holiday');
             const item = res?.data?.response?.body?.items?.item.map((date) => {
                 return `('${date.dateName}','${date.locdate}')`
             })
-            await connection.query(`INSERT INTO holiday VALUES ${item.toString()}`);
+            await pool.query(`INSERT INTO holiday VALUES ${item.toString()}`);
         }
-        [rows] = await connection.query('SELECT * FROM holiday');
-        connection.release();
+        [rows] = await pool.query('SELECT * FROM holiday');
         return { updateHolidayDB: rows };
 
     } catch (error) {
-        console.error(error.stack);
+        console.error(error);
         if (error.code == 'ECONNABORTED')
             return await updateHolidayDB();
         else {
-            return { updateHolidayDB: error.stack };
+            return { updateHolidayDB: error };
         }
     }
 }

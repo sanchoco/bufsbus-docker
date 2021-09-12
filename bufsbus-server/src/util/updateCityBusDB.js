@@ -12,24 +12,22 @@ const updateCityBusDB = async () => {
     const url = base.toString();
 
     try {
-        const connection = await pool.getConnection(async conn => conn);
         const res = await axios.get(url, { timeout: 20000 });
-        await connection.query('DELETE FROM city_301');
+        await pool.query('DELETE FROM city_301');
         if (res?.data?.response?.body?.items?.item){
             for (item of res?.data?.response?.body?.items?.item) {
                 const bstop = item?.bstopIdx == 10 ? 'guseo' : 'nopo';
                 const min1 = item.min1 || 'NULL';
                 const min2 = item.min2 || 'NULL';
                 const queryText = `INSERT INTO city_301 VALUES ('${bstop}',${min1},${min2})`
-                await connection.query(queryText);
+                await pool.query(queryText);
 
             }
-            const [ rows ] = await connection.query('SELECT * FROM city_301');
-            connection.release();
+            const [ rows ] = await pool.query('SELECT * FROM city_301');
             return { updateCityBus: rows };
         }
     } catch (error) {
-        console.log(error.stack);
+        console.log(error);
         return { updateCityBus: error };
     }
 }

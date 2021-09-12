@@ -12,12 +12,20 @@ const server = async () => {
 
     // set schedule job
     schedule.scheduleJob('0,20,40 * * * * *', async () => {
-        await updateCityBusDB();
-        console.log('City bus DB updated.' + new Date().toISOString());
+        try {
+            await updateCityBusDB();
+            console.log('City bus DB updated.' + new Date().toISOString());
+        } catch (err) {
+            console.log('City bus DB Update error!');
+        }
     });
     schedule.scheduleJob({tz: 'Asia/Seoul', date: 0, hour: 0, minute: 0, second: 0}, async () => {
-        await updateHolidayDB();
-        console.log('Holiday DB updated. ' + new Date().toISOString());
+        try {
+            await updateHolidayDB();
+            console.log('Holiday DB updated. ' + new Date().toISOString());
+        } catch (err) {
+            console.log('Holiday DB Update error!');
+        }
     });
 
     // init express

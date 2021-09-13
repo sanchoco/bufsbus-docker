@@ -42,6 +42,8 @@ const server = async () => {
 
     // site
     app.get('/', (req, res) => res.sendFile(web));
+    app.get('/loaderio-9a1e6494b39edfaa43bd8eb44761bdcc.txt',
+      (req, res) => res.sendFile(path.normalize(__dirname + '/../website/loaderio-9a1e6494b39edfaa43bd8eb44761bdcc.txt')))
     app.get('/health', (req, res) => res.send('health check page'));
     // api
     app.use('/api', api);

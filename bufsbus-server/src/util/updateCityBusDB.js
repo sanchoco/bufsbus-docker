@@ -23,11 +23,11 @@ const updateCityBusDB = async (pool) => {
 
             }
             const [ rows ] = await pool.query('SELECT * FROM city_301');
-            return { updateCityBus: rows };
+            return { updateCityBus: rows, updatedAt: new Date().toISOString() };
         }
     } catch (error) {
-        console.log(error);
-        return { updateCityBus: error };
+        await pool.query('DELETE FROM city_301');
+        return error.toString();
     }
 }
 

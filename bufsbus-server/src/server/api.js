@@ -77,7 +77,8 @@ router.get('/', wrapAsync(async (req, res) => {
         town_namsan_bufs,
         town_bufs_guseo,
         city_guseo,
-        city_nopo
+        city_nopo,
+        holiday: isHoliday
     })
 }));
 

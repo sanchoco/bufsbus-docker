@@ -23,7 +23,7 @@ const updateHolidayDB = async (pool) => {
         const url = base.toString();
 
         rax.attach();
-        const res = await axios.get(url, { timeout: 1000, raxConfig: { retry: 100, retryDelay: 100 }});
+        const res = await axios.get(url, { timeout: 5000, raxConfig: { retry: 100, retryDelay: 100 }});
         if (res?.data?.response?.body?.items?.item){
             await pool.query('DELETE FROM holiday');
             const item = res?.data?.response?.body?.items?.item.map((date) => {
@@ -32,14 +32,14 @@ const updateHolidayDB = async (pool) => {
             await pool.query(`INSERT INTO holiday VALUES ${item.toString()}`);
         }
         [rows] = await pool.query('SELECT * FROM holiday');
-        return { updateHolidayDB: rows };
+        return { updateHolidayDB: rows, updatedAt: new Date().toISOString() };
 
     } catch (error) {
         console.error(error);
         if (error.code == 'ECONNABORTED')
-            return await updateHolidayDB();
+            return await updateHolidayDB(pool);
         else {
-            return { updateHolidayDB: error };
+            return error.toString();
         }
     }
 }

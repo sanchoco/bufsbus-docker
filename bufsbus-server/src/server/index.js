@@ -2,31 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const api = require('./api');
+const pool = require('../db');
 const schedule = require('node-schedule');
 const { errorHandler, updateCityBusDB, updateHolidayDB } = require('../util');
-const pool = require('../db');
 
 const server = async () => {
+    const conn = await pool.getConnection();
     // init db data
-    await updateCityBusDB(pool);
-    await updateHolidayDB(pool);
+    updateCityBusDB(conn).then(console.log).catch(console.error);
+    updateHolidayDB(conn).then(console.log).catch(console.error);
 
     // set schedule job
-    schedule.scheduleJob('0,30 * * * * *', async () => {
-        try {
-            await updateCityBusDB(pool);
-            console.log('City bus DB updated.' + new Date().toISOString());
-        } catch (err) {
-            console.log('City bus DB Update error!');
-        }
+    schedule.scheduleJob('0,30 * * * * *', () => {
+        updateCityBusDB(conn).then(console.log).catch(console.error);
     });
-    schedule.scheduleJob({tz: 'Asia/Seoul', date: 0, hour: 0, minute: 0, second: 0}, async () => {
-        try {
-            await updateHolidayDB(pool);
-            console.log('Holiday DB updated. ' + new Date().toISOString());
-        } catch (err) {
-            console.log('Holiday DB Update error!');
-        }
+    schedule.scheduleJob({tz: 'Asia/Seoul', date: 0, hour: 0, minute: 0, second: 0}, () => {
+        updateHolidayDB(conn).then(console.log).catch(console.error);
     });
 
     // init express

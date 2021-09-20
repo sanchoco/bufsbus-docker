@@ -19,8 +19,6 @@
 			}
 		</style>
 
-		<script data-ad-client="ca-pub-9683578332904753" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-GZRFZETBSH"></script>
 		<script>
@@ -31,15 +29,22 @@
 		</script>
 
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+
 		<script>
 			function getData() {
 				axios({
-					method: 'get', //통신 방식
-					url: 'http://bufsbus.kr/api', //통신할 페이지
+					method: 'get',
+					url: 'http://bufsbus.kr/api',
 				}).then(response => {
-					for (key in response.data)
-						document.getElementById(key).innerText = response.data[key];
-					console.log('Time updated! ' + new Date().toISOString());
+					let holiday = '평일';
+					for (key in response.data){
+						if (key === 'holiday')
+							holiday = response.data[key] === true ? '휴일' : '평일';
+						else
+							document.getElementById(key).innerText = response.data[key];
+					}
+					console.log(` ${holiday} 시간표 업데이트 완료! ${dayjs().format('YYYY/MM/DD HH:mm:ss')}`);
 				}).catch(error => {
 					console.log(error);
 				})
@@ -212,5 +217,4 @@
 		</script>
 
 	</body>
-
 </html>

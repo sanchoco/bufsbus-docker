@@ -1,7 +1,9 @@
 const axios = require('axios').default;
+const pool = require('../db');
+const http = require('http');
 require('dotenv').config();
 
-const updateCityBusDB = async (pool) => {
+const updateCityBusDB = async () => {
     const base = new URL('http://61.43.246.153');
     base.pathname = '/openapi-data/service/busanBIMS2/stopArr';
     base.search = new URLSearchParams({
@@ -20,7 +22,6 @@ const updateCityBusDB = async (pool) => {
                 const min2 = item.min2 || 'NULL';
                 const queryText = `INSERT INTO city_301 VALUES ('${bstop}',${min1},${min2})`
                 await pool.query(queryText);
-
             }
             const [ rows ] = await pool.query('SELECT * FROM city_301');
             return { updateCityBus: rows, updatedAt: new Date().toISOString() };

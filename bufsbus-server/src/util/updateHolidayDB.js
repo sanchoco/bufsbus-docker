@@ -1,4 +1,5 @@
 const axios = require('axios').default;
+const pool = require('../db');
 const rax = require('retry-axios');
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
@@ -9,7 +10,7 @@ dayjs.tz.setDefault('Asia/Seoul');
 
 require('dotenv').config();
 
-const updateHolidayDB = async (pool) => {
+const updateHolidayDB = async () => {
     try {
         const year = dayjs().tz('Asia/Seoul').format('YYYY');
 
@@ -37,7 +38,7 @@ const updateHolidayDB = async (pool) => {
     } catch (error) {
         console.error(error);
         if (error.code == 'ECONNABORTED')
-            return await updateHolidayDB(pool);
+            return await updateHolidayDB();
         else {
             return error.toString();
         }

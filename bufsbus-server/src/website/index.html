@@ -44,7 +44,7 @@
 						else
 							document.getElementById(key).innerText = response.data[key];
 					}
-					console.log(` ${holiday} 시간표 업데이트 완료! ${dayjs().format('YYYY/MM/DD HH:mm:ss')}`);
+					console.log(`${holiday} 시간표 업데이트 완료! ${dayjs().format('YYYY/MM/DD HH:mm:ss')}`);
 				}).catch(error => {
 					console.log(error);
 				})

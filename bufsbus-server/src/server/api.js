@@ -67,6 +67,7 @@ router.get('/', wrapAsync(async (req, res) => {
     const city_guseo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='guseo'`))[0]);
     const city_nopo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='nopo'`))[0]);
     res.json({
+        status: 200,
         shuttle_university,
         shuttle_domitory,
         shuttle_beomeosa,

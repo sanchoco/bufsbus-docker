@@ -16,6 +16,5 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           cd /home/jsg3600/bufsbus-docker
-          pwd
           git pull
           sh /home/jsg3600/bufsbus-docker/start.sh

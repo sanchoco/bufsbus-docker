@@ -41,7 +41,7 @@
 					for (key in response.data){
 						if (key === 'holiday')
 							holiday = response.data[key] === true ? '휴일' : '평일';
-						else
+						if (document.getElementById(key))
 							document.getElementById(key).innerText = response.data[key];
 					}
 					console.log(`${holiday} 시간표 업데이트 완료! ${dayjs().format('YYYY/MM/DD HH:mm:ss')}`);

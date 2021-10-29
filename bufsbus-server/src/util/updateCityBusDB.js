@@ -21,17 +21,15 @@ const updateCityBusDB = async () => {
             throw Error();
         const data = parser.parse(res.data);
         await pool.query('DELETE FROM city_301');
-        if (data.response.body.items.item){
-            for (item of data.response.body.items.item) {
-                const bstop = item.bstopidx == 10 ? 'guseo' : 'nopo';
-                const min1 = item.min1 || 'NULL';
-                const min2 = item.min2 || 'NULL';
-                const queryText = `INSERT INTO city_301 VALUES ('${bstop}',${min1},${min2})`
-                await pool.query(queryText);
-            }
-            const [ rows ] = await pool.query('SELECT * FROM city_301');
-            return { updateCityBus: rows, updatedAt: new Date().toISOString() };
+        for (item of data.response.body.items.item) {
+            const bstop = item.bstopidx == 10 ? 'guseo' : 'nopo';
+            const min1 = item.min1 || 'NULL';
+            const min2 = item.min2 || 'NULL';
+            const queryText = `INSERT INTO city_301 VALUES ('${bstop}',${min1},${min2})`
+            await pool.query(queryText);
         }
+        const [ rows ] = await pool.query('SELECT * FROM city_301');
+        return { updateCityBus: rows, updatedAt: new Date().toISOString() };
     } catch (error) {
         await pool.query('DELETE FROM city_301');
         return error.toString();

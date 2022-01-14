@@ -3,8 +3,8 @@ USE bufsbus;
 DROP TABLE IF EXISTS shuttle_university;
 CREATE TABLE shuttle_university (arrive time PRIMARY KEY);
 
-INSERT INTO shuttle_university
-VALUES
+-- INSERT INTO shuttle_university
+-- VALUES
 	-- ('08:10:00'),
 	-- ('08:20:00'),
 	-- ('08:25:00'),

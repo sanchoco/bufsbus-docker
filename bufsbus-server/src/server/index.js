@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-// const api = require('./api');
+const api = require('./api');
 // const schedule = require('node-schedule');
 const { errorHandler } = require('../util');
 
@@ -35,7 +35,7 @@ const server = async () => {
     app.get('/', (req, res) => res.sendFile(web));
     app.get('/health', (req, res) => res.send('health check page'));
     // api
-    // app.use('/api', api);
+    app.use('/api', api);
 
     // error handling
     app.use(errorHandler);

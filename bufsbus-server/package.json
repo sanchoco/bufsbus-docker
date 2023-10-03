@@ -4,7 +4,7 @@
   "description": "BUFS Bus time check",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

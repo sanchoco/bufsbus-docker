@@ -1,10 +1,10 @@
 FROM node:14-slim
 
-COPY . /bufs-bus
 WORKDIR /bufs-bus
 RUN apt update && apt install curl -y
-RUN npm ci --only=production
 RUN npm install -g pm2
+COPY . /bufs-bus
+RUN npm ci --only=production
 
 EXPOSE 3000
 

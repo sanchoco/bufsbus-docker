@@ -1,2 +1,2 @@
-docker-compose up --force-recreate -d --build
-docker image prune -f
+sudo docker-compose up --force-recreate -d --build
+sudo docker image prune -f

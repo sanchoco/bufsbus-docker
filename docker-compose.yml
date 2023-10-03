@@ -1,8 +1,8 @@
-version:  '3.3'
+version: "3.3"
 
 services:
   mysql:
-    build: 
+    build:
       context: ./bufsbus-mysql
       dockerfile: Dockerfile
     restart: always
@@ -10,18 +10,18 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: tempPass
       MYSQL_DATABASE: bufsbus
-      TZ: 'Asia/Seoul'
+      TZ: "Asia/Seoul"
       MYSQL_USER: bus_user
       MYSQL_PASSWORD: busTempPass
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     ports:
-      - '3306:3306'
+      - "3306:3306"
     expose:
-      - '3306'
+      - "3306"
   node:
-    depends_on: 
+    depends_on:
       - mysql
     build:
       context: ./bufsbus-server
@@ -29,7 +29,7 @@ services:
     restart: always
     container_name: bufsbus-server
     ports:
-      - '80:3000'
+      - "3000:3000"
     environment:
       NODE_ENV: production
       MYSQL_HOST: mysql

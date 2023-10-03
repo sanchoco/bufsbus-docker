@@ -53,19 +53,19 @@ router.get('/', wrapAsync(async (req, res) => {
         ]);
     
     // 마을 버스
-    const hTable = isHoliday ? '_holiday' : '';
-    const [ town_guseo_bufs, town_bufs_namsan, town_namsan_bufs, town_bufs_guseo ] =
-        await Promise.all([
-            getData('town_guseo_bufs' + hTable, 'arrive'),
-            getData('town_bufs_namsan' + hTable, 'arrive'),
-            getData('town_namsan_bufs' + hTable, 'arrive'),
-            getData('town_bufs_guseo' + hTable, 'arrive')
-        ]);
+    // const hTable = isHoliday ? '_holiday' : '';
+    // const [ town_guseo_bufs, town_bufs_namsan, town_namsan_bufs, town_bufs_guseo ] =
+    //     await Promise.all([
+    //         getData('town_guseo_bufs' + hTable, 'arrive'),
+    //         getData('town_bufs_namsan' + hTable, 'arrive'),
+    //         getData('town_namsan_bufs' + hTable, 'arrive'),
+    //         getData('town_bufs_guseo' + hTable, 'arrive')
+    //     ]);
 
     // 301번 버스
-    const timeFormat = (rows) => rows.length && rows[0].min1 ? rows[0].min1 + '분 후 도착' : NOBUS;
-    const city_guseo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='guseo'`))[0]);
-    const city_nopo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='nopo'`))[0]);
+    // const timeFormat = (rows) => rows.length && rows[0].min1 ? rows[0].min1 + '분 후 도착' : NOBUS;
+    // const city_guseo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='guseo'`))[0]);
+    // const city_nopo = timeFormat((await pool.query(`SELECT * FROM city_301 WHERE bus_stop='nopo'`))[0]);
     res.json({
         status: 200,
         shuttle_university,
@@ -73,12 +73,12 @@ router.get('/', wrapAsync(async (req, res) => {
         shuttle_beomeosa,
         shuttle_namsan,
         shuttle_fire,
-        town_guseo_bufs,
-        town_bufs_namsan,
-        town_namsan_bufs,
-        town_bufs_guseo,
-        city_guseo,
-        city_nopo,
+        town_guseo_bufs: NOBUS,
+        town_bufs_namsan: NOBUS,
+        town_namsan_bufs: NOBUS,
+        town_bufs_guseo: NOBUS,
+        city_guseo: NOBUS,
+        city_nopo: NOBUS,
         holiday: isHoliday
     })
 }));
